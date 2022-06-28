@@ -1,0 +1,84 @@
+/*********************
+ * 기본 설정 및 dependency
+ *********************/
+plugins {
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.aswinblue'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '18'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+/*********************
+ * React 설정
+ *********************/
+def reactDir = "$projectDir/src/main/webapp"; // react 프로젝트 경로 설정
+sourceSets{
+  main{
+      resources{
+          srcDirs = ["$projectDir/src/main/resources"]
+      }
+  }
+}
+
+// 최초로 수행할 task 지정
+processResources{
+  dependsOn "copyReactBuildFiles"
+}
+
+// $reactDir 위치에서 `npm audit fix` 명령 실행
+task installReact(type:Exec){
+  workingDir "$reactDir"
+  inputs.dir "$reactDir"
+  group = BasePlugin.BUILD_GROUP
+
+  if(System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')){
+      commandLine "npm.cmd", "audit", "fix"
+      commandLine 'npm.cmd', 'install'
+  }else{
+      commandLine "npm", "audit", "fix"
+      commandLine 'npm', 'install'
+  }
+}
+
+// installReact task를 호출
+// $reactDir 위치에서 `npm run-script build` 실행
+// react 프로젝트의 `package.json` 파일에 적힌 build 스크립트가 실행됨.
+task buildReact(type:Exec){
+  dependsOn "installReact"
+  workingDir "$reactDir"
+  inputs.dir "$reactDir"
+  group = BasePlugin.BUILD_GROUP
+
+  if(System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')){
+      commandLine "npm.cmd", "run-script", "build"
+  }else{
+      commandLine "npm", "run-script", "build"
+  }
+}
+
+// buildReact task를 호출
+// 앞서 지정한 $reactDir 경로의 /build 위치에서 생성된 데이터를 $projectDir/src/main/resources/static 로 복사
+task copyReactBuildFiles(type:Copy) {
+  dependsOn "buildReact"
+  from "$reactDir/build"
+  into "$projectDir/src/main/resources/static"
+}

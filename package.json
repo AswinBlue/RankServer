@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "postcss-cli": "^9.1.0",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^3.1.4"
+  },
+
+  "scripts": {
+    "build:postcss":"npx cross-env NODE_ENV=production postcss base.tailwind.css -o target/classes/static/css/tailwind.css",
+    "watch:postcss":"npx cross-env NODE_ENV=production postcss base.tailwind.css -o src/main/resources/static/css/tailwind.css -w"
+  }
+}
