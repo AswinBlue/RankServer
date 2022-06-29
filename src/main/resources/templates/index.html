@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+xmlns:th="http://www.thymeleaf.org"
+lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Hello TailWind CSS</title>
     <link rel="stylesheet" th:href="@{/css/tailwind.css}">
-
+    
 </head>
 <body>
+    <div th:replace="components/navbar::navbar"></div>
     <h1 class="text-2xl text-blue-300 text-center">Hello TailWind CSS</h1>
-
+    
+    <div th:replace="components/footer::footer"></div>
 </body>
 </html>

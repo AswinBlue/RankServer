@@ -1,4 +1,6 @@
+:: gradle settings
 gradle wrapper
 gradlew build
-@REM package.json에 script 작성 필요
+:: tailwind css settings
+:: need script in package.json
 npm run watch:postcss
