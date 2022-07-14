@@ -1,6 +1,8 @@
+# for web
 server:
   port: 8080
 
+# for spring
 spring:
   # config:
   #   activate:
@@ -35,3 +37,15 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
+
+# for SLF4J
+logging:
+  file:
+    name: ${user.dir}/log/test.log  # Log file path
+    max-history: 7 # delete period
+    max-size: 10MB  # max size of single log file
+  level:  # set log level to each package
+    com.aswinblue.RankServer : debug
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
