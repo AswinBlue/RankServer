@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aswinblue.RankServer.DTO.UserInfoDTO;
 import com.aswinblue.RankServer.Entity.UserInfoEntity;
@@ -49,18 +50,24 @@ public class InputController {
     }
 
     @PostMapping("/data/userRank")
-    public String handleUserNameForm(@RequestBody String userName, Model model) {
+    // public String handleUserNameForm(@RequestBody String userName, Model model) {
+    public String handleUserNameForm(@RequestParam String userName, Model model) {
         // 이름으로 점수 찾고, 새로운 페이지에서 랭크 테이블 보여줘야함
         
         // UserInfoEntity entity = dto.toEntity();
         // List<UserInfoEntity> user = snr.findByName(entity.getName());
 
-        UserInfoEntity user = snr.findByName(userName).get(0);
+        log.debug("userName: {}", userName);
+        UserInfoEntity user = snr.findFirstByNameAllIgnoreCase(userName);
         log.debug("user: {}", user);
-        // TODO : Fix this
-        List<UserInfoEntity> allUsers = snr.findFirst20ByRankGreaterThanEqualOrderByScoreDesc(user.getScore());
-        allUsers.addAll(snr.findFirst20ByRankLessThanOrderByScoreDesc(user.getScore()));
-
+        List<UserInfoEntity> allUsers = snr.findFirst20ByRankLessThanOrderByScoreDesc(user.getRank());
+        allUsers.addAll(snr.findFirst20ByRankGreaterThanEqualOrderByScoreDesc(user.getRank()));
+        log.debug("size of result: {}", allUsers.size());
+        /*
+        for (UserInfoEntity u : allUsers) {
+            log.debug("{}", u);
+        }
+        */
         model.addAttribute("targetUser", user);
         model.addAttribute("allUsers", allUsers);
         return "rank_table";

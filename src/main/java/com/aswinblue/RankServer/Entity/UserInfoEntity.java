@@ -28,7 +28,7 @@ public class UserInfoEntity {
     }
 
     public String toString() {
-        return "id: " + this.id + ", name: " + this.name + ", score: " + this.score + ", rank: " + this.rank + "\n";
+        return "id: " + this.id + ", name: " + this.name + ", score: " + this.score + ", rank: " + this.rank;
     }
 
     public Long getId() {

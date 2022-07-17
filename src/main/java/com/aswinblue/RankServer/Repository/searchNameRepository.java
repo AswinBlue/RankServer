@@ -9,16 +9,16 @@ import com.aswinblue.RankServer.Entity.UserInfoEntity;
 // CrudRepository<관리대상, 대표값의 type>
 // public interface searchNameRepository extends CrudRepository<UserInfoEntity, Long> {
 public interface searchNameRepository extends JpaRepository<UserInfoEntity, Long> {
-    @Query("select u from UserInfoEntity u")
-    List<UserInfoEntity> findByName(String name);
+    // @Query("select u from UserInfoEntity u")
+    UserInfoEntity findFirstByNameAllIgnoreCase(String name);
 
     // find top 100 Rank
     List<UserInfoEntity> findFirst100ByOrderByRankAsc();
     
     // find by score
     // List<UserInfoEntity> findByScoreLessThanEqual(Integer score);
-    List<UserInfoEntity> findFirst20ByRankGreaterThanEqualOrderByScoreDesc(Integer score);
-    List<UserInfoEntity> findFirst20ByRankLessThanOrderByScoreDesc(Integer score);
+    List<UserInfoEntity> findFirst20ByRankGreaterThanEqualOrderByScoreDesc(Long rank);
+    List<UserInfoEntity> findFirst20ByRankLessThanOrderByScoreDesc(Long rank);
     
     // rank all by score
     List<UserInfoEntity> findAllByOrderByScoreDesc();

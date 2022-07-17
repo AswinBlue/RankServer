@@ -32,16 +32,16 @@ public class Scheduler {
 	// TODO : remove after test
 	@Scheduled(cron = "0 * * * * *")	// 1분마다
 	public void scheduleEveryMinute() throws Exception {
-		log.info("evert single minute");
+		log.info("every single minute");
 		setRank();
 	}
 	
 	private void setRank() {
 		// rank 새로 매기기
 		List<UserInfoEntity> data = snr.findAllByOrderByScoreDesc();
-		int rank = 1;
+		int rank = 0;
 		int same_score_count = 1;
-		int prev_score = 0;
+		int prev_score = -1;
 		for (UserInfoEntity row : data) {
 			if (prev_score != row.getScore()) {
 				prev_score = row.getScore();
