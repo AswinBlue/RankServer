@@ -4,7 +4,7 @@ xmlns:th="http://www.thymeleaf.org"
 lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello TailWind CSS</title>
+    <title>User Rank Table</title>
     <link rel="stylesheet" th:href="@{/css/tailwind.css}">
 </head>
 <body>
@@ -18,9 +18,13 @@ lang="en">
           <th>RANK</th>
         </tr>
         <tr th:each="user : ${allUsers}">
-          <td th:text="${user.name}">Onions</td>
-          <td th:text="${user.score}">2.41</td>
-          <td th:text="${user.rank}">yes</td>
+          <td th:if="${user.name} == ${targetUser.name}" th:text="${user.name}" class="text-red-400">name</td>
+          <td th:unless="${user.name} == ${targetUser.name}" th:text="${user.name}" class="text-black-800">name</td>
+          <td th:if="${user.name} == ${targetUser.name}" th:text="${user.score}" class="text-red-400">score</td>
+          <td th:unless="${user.name} == ${targetUser.name}" th:text="${user.score}" class="text-black-800">score</td>
+          <td th:if="${user.name} == ${targetUser.name}"th:text="${user.rank}" class="text-red-400">rank</td>
+          <td th:unless="${user.name} == ${targetUser.name}" th:text="${user.rank}" class="text-black-800">rank</td>
+
         </tr>
       </table>
       <div th:replace="components/footer::footer"></div>

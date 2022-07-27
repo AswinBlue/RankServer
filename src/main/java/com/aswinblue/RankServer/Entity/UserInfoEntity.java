@@ -44,6 +44,9 @@ public class UserInfoEntity {
     }
 
     public Long getRank() {
+        if (this.rank == null) {
+            return Long.valueOf(1);
+        }
         return this.rank;
     }
 

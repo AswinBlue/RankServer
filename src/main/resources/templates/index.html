@@ -4,19 +4,19 @@ xmlns:th="http://www.thymeleaf.org"
 lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello TailWind CSS</title>
+    <title>Main Page</title>
     <link rel="stylesheet" th:href="@{/css/tailwind.css}">
     
 </head>
 <body>
     <div th:replace="components/navbar::navbar"></div>
-    <h1 class="text-2xl text-blue-300 text-center">See my Rank</h1>
-    <form action="/data/userRank" method="post">
-        <label>See your Rank</label>
-        <input type="text" name="userName" placeholder="your character name">
-        <br/>
-        <button>see table</button>
-        <br/>
+    <h1 class="text-2xl text-blue-300 text-center">search rank</h1>
+    <form action="/data/userRank" method="post" class="m-5">
+        <div class="relative max-w-md">
+            <label class="static mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">your name</label>
+            <input type="text" name="userName" placeholder="your character name" class="p-4 pl-10 block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <button class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        </div>
     </form>
     <div th:replace="components/footer::footer"></div>
 </body>

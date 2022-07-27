@@ -37,6 +37,7 @@ public class InputController {
 
         List<UserInfoEntity> allUsers = snr.findAllByOrderByScoreDesc();
         model.addAttribute("allUsers", allUsers);
+        model.addAttribute("targetUser", new UserInfoEntity(null, "", 0));
 
         return "rank_table";
     }
@@ -45,6 +46,7 @@ public class InputController {
     public String showRankTable(Model model) {
         List<UserInfoEntity> allUsers = snr.findAllByOrderByScoreDesc();
         model.addAttribute("allUsers", allUsers);
+        model.addAttribute("targetUser", new UserInfoEntity(null, "", 0));
 
         return "rank_table";
     }
@@ -60,8 +62,12 @@ public class InputController {
         log.debug("userName: {}", userName);
         UserInfoEntity user = snr.findFirstByNameAllIgnoreCase(userName);
         log.debug("user: {}", user);
-        List<UserInfoEntity> allUsers = snr.findFirst20ByRankLessThanOrderByScoreDesc(user.getRank());
-        allUsers.addAll(snr.findFirst20ByRankGreaterThanEqualOrderByScoreDesc(user.getRank()));
+        long rank = 1;
+        if (user != null) {
+            rank = user.getRank();
+        }
+        List<UserInfoEntity> allUsers = snr.findFirst20ByRankLessThanOrderByScoreDesc(rank);
+        allUsers.addAll(snr.findFirst20ByRankGreaterThanEqualOrderByScoreDesc(rank));
         log.debug("size of result: {}", allUsers.size());
         /*
         for (UserInfoEntity u : allUsers) {
