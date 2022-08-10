@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tooltip {
+    @apply invisible;
+}
+.has-tooltip:hover .tooltip {
+    @apply visible;
+}
+  
+.append {
+    @apply invisible;
+}
+.has-append:focus .append {
+    @apply visible;
+}
